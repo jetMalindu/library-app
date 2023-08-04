@@ -6,23 +6,24 @@ import { Author } from "./types";
 interface CreateBookModalProps {
   visible: boolean;
   setVisible: (value: boolean) => void;
+  visibleAuthorModal:boolean
 }
 interface BookSubmit {
   isbn: string;
   author: string;
   name: string;
 }
-const CreateBookModal = ({ visible, setVisible }: CreateBookModalProps) => {
+const CreateBookModal = ({ visible, setVisible,visibleAuthorModal }: CreateBookModalProps) => {
   const [messageApi, contextHolder] = message.useMessage();
   const [authors, setAuthors] = useState<Author[]>([]);
   const GET_AUTHORS_URL = "http://localhost:8008/authors";
   const POST_BOOK_URL = "http://localhost:8008/book";
-  
+
   useEffect(() => {
     axios.get(GET_AUTHORS_URL).then((response) => {
       setAuthors(response.data.data);
     });
-  }, []);
+  }, [visibleAuthorModal]);
 
   const handleOk = () => {
     setVisible(false);
