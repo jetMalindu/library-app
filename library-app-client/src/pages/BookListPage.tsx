@@ -4,12 +4,14 @@ import { Book } from "../components/types";
 import { Button, Space, Alert, message } from "antd";
 import axios from "axios";
 import CreateBookModal from "../components/CreateBookModal";
+import CreateAuthorModal from "../components/CreateAuthorModal";
 
 const BookListPage = () => {
   const [book, setBooks] = useState<Book[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
-  const [visibleBookModal, setVisibleBookModal] = useState<boolean>(false)
-  const GET_BOOKS_URL = "http://localhost:8008/books"
+  const [visibleBookModal, setVisibleBookModal] = useState<boolean>(false);
+  const [visibleAuthorModal, setVisibleAuthorModal] = useState<boolean>(false);
+  const GET_BOOKS_URL = "http://localhost:8008/books";
   useEffect(() => {
     axios.get(GET_BOOKS_URL).then(
       (response) => {
@@ -23,7 +25,7 @@ const BookListPage = () => {
         });
       }
     );
-  }, []);
+  }, [visibleBookModal]);
 
   return (
     <>
@@ -35,12 +37,20 @@ const BookListPage = () => {
       )}
       <div style={{ height: "100px" }}></div>
       <Space wrap>
-        <Button type="primary">Create Author</Button>
-        <Button type="dashed" danger onClick={()=>setVisibleBookModal(true)}>
+        <Button type="primary" onClick={() => setVisibleAuthorModal(true)}>Create Author</Button>
+        <Button type="dashed" danger onClick={() => setVisibleBookModal(true)}>
           Create Book
         </Button>
       </Space>
-      <CreateBookModal setVisible={setVisibleBookModal} visible={visibleBookModal}/>
+      <CreateBookModal
+        setVisible={setVisibleBookModal}
+        visible={visibleBookModal}
+        visibleAuthorModal
+      />
+      <CreateAuthorModal
+        setVisible={setVisibleAuthorModal}
+        visible={visibleAuthorModal}
+      />
     </>
   );
 };
