@@ -2,7 +2,7 @@ import * as mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 export interface IAuthor {
-  _id: string;
+  _id?: string;
   first_name: string;
   last_name: string;
 }
