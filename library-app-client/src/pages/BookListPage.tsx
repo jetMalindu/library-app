@@ -18,7 +18,6 @@ const BookListPage = () => {
         setBooks(response.data.data);
       },
       (err) => {
-        console.log(err);
         messageApi.open({
           type: "error",
           content: "Something went wrong",
